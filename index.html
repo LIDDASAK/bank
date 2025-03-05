@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="lo">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Payment</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .qr-code {
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
+      }
+      .btn-primary,
+      .btn-success,
+      .btn-danger {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .alert-success {
+        display: none;
+      }
+
+      /* Import Phetsarath Font */
+      @font-face {
+        font-family: "Phetsarath";
+        src: url("fonts/Phetsarath.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      /* Apply the font to the entire page */
+      body {
+        font-family: "Phetsarath", Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .qr-section {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .qr-section img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 10px;
+      }
+
+      .account-details {
+        margin-bottom: 20px;
+      }
+
+      .account-info {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
+
+      .account-info h3 {
+        margin-top: 0;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>ຊຳລະເງິນຜ່ານ QR CODE</h3>
+      <img
+        src="https://blogger.googleusercontent.com/img/a/AVvXsEjEcNlpEVdZLF_plbX_xjf52IBgZqatRRWbSKvLABiTxZxF0jlUZ2pTmI8IqS9KIJoXIBAu3eUE2VJGTScDu7B7sdF321mwwmZ0UJPF_bPKkHRzcgXcSY9Zwk4zYi9zms-YbX1HUGyl16JSOuLBwvImvLglUENyGVbTOcX9xlsVQlRoE3FOY6YrbLECp7g=s732"
+        alt="QR Code"
+        class="qr-code"
+      />
+      <p><strong>ຊື່ບັນຊີ:</strong> MAIPHAN VANNASUK MONK</p>
+      <p><strong>ທະນາຄານ:</strong> ການຄ້າຕ່າງປະເທດລາວ (BCEL)</p>
+
+      <!-- LAK Account -->
+      <input
+        type="text"
+        value="170120001967388001"
+        id="bcelLAK"
+        class="form-control text-center"
+        readonly
+      />
+      <button
+        onclick="copyToClipboard('bcelLAK', 'bcelLAKCopied')"
+        class="btn btn-primary btn-lg"
+      >
+        ຄັດລອກເລກບັນຊີ LAK
+      </button>
+      <div id="bcelLAKCopied" class="alert alert-success mt-2">
+        ຄັດລອກເລກບັນຊີ LAK ສຳເຫຼັດ
+      </div>
+
+      <!-- THB Account -->
+      <input
+        type="text"
+        value="171120201967388001"
+        id="bcelTHB"
+        class="form-control text-center mt-3"
+        readonly
+      />
+      <button
+        onclick="copyToClipboard('bcelTHB', 'bcelTHBCopied')"
+        class="btn btn-success btn-lg"
+      >
+        ຄັດລອກເລກບັນຊີ THB
+      </button>
+      <div id="bcelTHBCopied" class="alert alert-success mt-2">
+        ຄັດລອກເລກບັນຊີ THB ສຳເຫຼັດ
+      </div>
+
+      <!-- USD Account -->
+      <input
+        type="text"
+        value="171120101582383001"
+        id="bcelUSD"
+        class="form-control text-center mt-3"
+        readonly
+      />
+      <button
+        onclick="copyToClipboard('bcelUSD', 'bcelUSDCopied')"
+        class="btn btn-danger btn-lg"
+      >
+        ຄັດລອກເລກບັນຊີ USD
+      </button>
+      <div id="bcelUSDCopied" class="alert alert-success mt-2">
+        ຄັດລອກເລກບັນຊີ USD ສຳເຫຼັດ
+      </div>
+    </div>
+
+    <script>
+      function copyToClipboard(inputId, alertId) {
+        const input = document.getElementById(inputId);
+        navigator.clipboard.writeText(input.value).then(() => {
+          // Show success alert
+          const alertBox = document.getElementById(alertId);
+          alertBox.style.display = "block";
+
+          // Hide alert after 2 seconds
+          setTimeout(() => {
+            alertBox.style.display = "none";
+          }, 2000);
+        });
+      }
+    </script>
+  </body>
+</html>
